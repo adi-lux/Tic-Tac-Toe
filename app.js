@@ -9,22 +9,10 @@
 // Player factory creates a player and its attributes, defines attributes and functions.
 
 const Player = (givenUserName, gameLetter) => {
-  let isTurn = false;
-  let isWinner = false;
   let userName = givenUserName;
   let letter = gameLetter;
 
-  const toggleTurn = () => (isTurn = !isTurn);
-
-  const toggleWinner = () => (isWinner = !isWinner);
-
   return {
-    get isTurn() {
-      return isTurn;
-    },
-    get isWinner() {
-      return isWinner;
-    },
     get userName() {
       return userName;
     },
@@ -34,12 +22,14 @@ const Player = (givenUserName, gameLetter) => {
     set userName(newUserName) {
       userName = newUserName;
     },
-    toggleTurn,
-    toggleWinner,
+    set letter(newLetter) {
+      letter = newLetter;
+    },
   };
 };
 
 // Gameboard Module
+//
 
 const GameBoard = (() => {
   let gameArray = [
@@ -47,13 +37,65 @@ const GameBoard = (() => {
     ["", "", ""],
     ["", "", ""],
   ];
-  // 2 players, they both choose their own stuff
+  let filledSpaces = 0;
+  const playerOne = Player("Player One", "X");
+  const playerTwo = Player("Player Two", "O");
+  let curPlayer = playerOne;
 
+  const resetGame = () => {
+    filledSpaces = 0;
+    gameArray = [
+      ["", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ];
+  };
 
+  const _boardFull = () => {
+    return filledSpaces === gameArray[0].length * gameArray.length;
+  };
+
+  const _checkForWin = () => {
+    // diagonal
+
+    // horizontal
+
+    // vertical
+
+    if (_boardFull()) {
+      return Tie;
+    }
+  };
+
+  const _placeLetterOnBoard = (row, col) => {};
+
+  const move = (row, col) => {
+    // Place Letter on Board
+    const placeSuccess = _placeLetterOnBoard(row, col);
+    if (!placeSuccess) {
+      return false;
+    }
+    // Check to See If Win & Also If Tied
+    const playerSuccess = _checkForWin();
+
+    // If not win, swap players
+
+    if (!playerSuccess) {
+      if (curPlayer === playerOne) {
+        curPlayer = playerTwo;
+      }
+      if (curPlayer === playerTwo) {
+        curPlayer = playerOne;
+      }
+    }
+
+    // return true = success, false = not placed on the board
+    return true;
+  };
+
+  return { move };
 })();
 
 // displayController Module
 
-const DisplayController = (() => {
-
-})();
+const DisplayController = (() => {})();
