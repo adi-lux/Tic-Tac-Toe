@@ -32,15 +32,16 @@ const Player = (givenUserName, gameLetter) => {
 //
 
 const GameBoard = (() => {
+  'use strict';
   let gameArray = [
     ["", "", ""],
     ["", "", ""],
     ["", "", ""],
   ];
   let filledSpaces = 0;
-  const playerOne = Player("Player One", "X");
-  const playerTwo = Player("Player Two", "O");
-  let curPlayer = playerOne;
+  const playerList = [Player("Player One", "X"), Player("Player Two", "O")];
+  let curPlayer = 0;
+  let winningRow = [-2,-2,-2];
 
   const resetGame = () => {
     filledSpaces = 0;
@@ -51,23 +52,58 @@ const GameBoard = (() => {
     ];
   };
 
+  // Methods of victory: 3 horizontal, 3 vertical, 2 diagnoal
   const _boardFull = () => {
     return filledSpaces === gameArray[0].length * gameArray.length;
   };
 
   const _checkForWin = () => {
+    // invariant: you will always be checking the current person's most recent move.
+    const curLetter = playerList[curPlayer].letter
+
+
     // diagonal
 
+    if (gameArray[0][2] === curLetter && gameArray[0][2] === curLetter && gameArray[0][2] === curLetter ) {
+      console.log(`win!`);
+      return [[0,2],[1,1],[2,0]]
+    }
+    if (gameArray[0][0] === curLetter && gameArray[0][0] === curLetter && gameArray[0][0] === curLetter) {
+      console.log(`win!`);
+      return [[0,0],[1,1],[2,2]]
+    }
+
     // horizontal
+    for (let i = 0; i < gameArray.length; i++) {
+        if (gameArray[i][0] === curLetter && gameArray[i][1] === curLetter && gameArray[i][2] === curLetter) {
+          console.log(`win!`);
+          return [[i,0],[i,1],[i,2]]
+        }
+        if (gameArray[0][i] === curLetter && gameArray[1][i] === curLetter && gameArray[2][i] === curLetter) {
+          console.log(`win!`);
+          return [[0,i],[1,i],[2,i]]
+        }
+      }
 
     // vertical
 
     if (_boardFull()) {
-      return Tie;
+      console.log(`tie!`);
+      return [-1, -1, -1]; // Tied game
     }
+    
+    return [-2,-2,-2]; // incomplete game
+
   };
 
-  const _placeLetterOnBoard = (row, col) => {};
+  const _placeLetterOnBoard = (x,y) => {
+    if (gameArray[y][x] !== "") {
+      return false;
+    }
+
+    gameArray[y][x] = playerList[curPlayer].letter;
+    return true;
+  };
 
   const move = (row, col) => {
     // Place Letter on Board
@@ -75,27 +111,37 @@ const GameBoard = (() => {
     if (!placeSuccess) {
       return false;
     }
+
     // Check to See If Win & Also If Tied
-    const playerSuccess = _checkForWin();
+    winningRow = _checkForWin();
+    console.log(`${winningRow}`);
 
     // If not win, swap players
 
-    if (!playerSuccess) {
-      if (curPlayer === playerOne) {
-        curPlayer = playerTwo;
-      }
-      if (curPlayer === playerTwo) {
-        curPlayer = playerOne;
-      }
-    }
 
+      if (winningRow[0] === -2) {  
+        curPlayer ^= 1  // XOR's curPlayer    
+      }
+    
     // return true = success, false = not placed on the board
     return true;
   };
 
-  return { move };
+  return {
+    get winningRow() {
+      return winningRow;
+    },
+    get curPlayer() {
+      return curPlayer;
+    },
+    get gameArray() {
+      return gameArray
+    },
+    move,
+  };
 })();
 
 // displayController Module
 
 const DisplayController = (() => {})();
+
