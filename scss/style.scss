@@ -3,17 +3,22 @@
   src: url("../fonts/AlmaMono-Bold.ttf");
 }
 
-$default-font-family: "Alma Mono", "Courier New", Courier, monospace;
+$default-font-family: "Alma Mono", "Courier New", courier, monospace;
 $primary-color: rgba(#c4a0f9, 1) !default;
-$secondary-color: rgba(#f9a0d6, 1) !default;
+$secondary-color: rgba(#f8c0e2, 1) !default;
 $surface-color: rgba(#fdeae3, 1) !default;
 $accent-color: rgba(#1d0017, 0.6) !default;
+$alert-color: rgba(#ffbca3, 1) !default;
+
+* {
+    font-family: $default-font-family;
+    color: $accent-color;
+}
 
 :root {
-  font-family: $default-font-family;
-  color: $accent-color;
   background-color: $surface-color;
 }
+
 body {
   margin: 0;
 }
@@ -31,7 +36,8 @@ body {
   display: grid;
   overflow: clip;
   place-content: center;
-  box-shadow: 0px 2px 5px rgba(#b9a4a4, 0.9);
+  box-shadow: 0 2px 5px rgba(#b9a4a4, 0.9);
+
   h1 {
     max-width: 100%;
     font-size: clamp(15px, 4rem, 5rem);
@@ -42,55 +48,144 @@ body {
   grid-column: 1/2;
   grid-row: 2/3;
   backdrop-filter: blur(10px);
-  visibility: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 6fr 1fr;
+  visibility: visible;
+  gap: 0 50vw;
+}
+
+.start-button {
+    grid-area: 2 / 1 / 3 / 3;
+    place-self: center;
+    background-color: rgba(#fdeae3, 0.1);
+    ;
+    border: 0;
+    border-radius: 15px;
+    font-size: 4rem;
+
+    &:hover {
+    box-shadow: 1px 1px 5px rgba(#1c0801, 1);
+    }
+}
+
+#player-one {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+#player-two {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+
+.player-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .background {
+    height: 30vmin;
+    width: 30vmin;
+    background-color: $alert-color;
+    box-shadow: 0 0 1px $secondary-color;
+    display: grid;
+    place-content: center;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .change-name {
+    width: 30vmin;
+    height: 3vmin;
+    display: flex;
+    justify-content: center;
+    gap: 1px;
+
+    input {
+      width: 100%;
+      background-color: $primary-color;
+      font-weight: bold;
+      border: 0;
+      box-shadow: 0 0 2px $accent-color;
+
+      &[type="text"] {
+        color: $accent-color;
+      }
+
+      &[type="submit"] {
+        background-color: $secondary-color;
+
+        &:active {
+          box-shadow: 1px 1px 3px $accent-color;
+        }
+
+        &:hover {
+          background-color: rgba(#fe94d4, 1);
+        }
+      }
+    }
+  }
 }
 
 .playing-field {
   grid-column: 1/2;
   grid-row: 2/3;
-  
   display: grid;
-  grid-template-areas: "one one board board board two two"
+  grid-template-areas: "one one board board board two two";
 }
 
 .player-one {
   grid-area: one;
-  height: 20vmin;
-  width: 20vmin;
 }
 
 .player-two {
   grid-area: two;
-  height: 20vmin;
-  width: 20vmin;
+}
+
+.player-one,
+.player-two {
+  place-self: center;
+  visibility: hidden;
+
+  .background {
+    border: 3px solid $accent-color;
+    border-radius: 25px;
+
+    .current {
+      background-color: $primary-color;
+    }
+  }
 }
 
 .game-board {
   grid-area: board;
   text-align: center;
   display: grid;
-  background-color: $secondary-color;
-  box-shadow: 0px 0px 55px $secondary-color;
+  box-shadow: 0 0 55px $secondary-color;
   height: 60vmin;
   width: 60vmin;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
   place-self: center;
   place-content: center;
-  overflow:clip;
+  overflow: clip;
   border-radius: 40px;
-  gap: 2px;
-  background-color:$accent-color;
-  //visibility: hidden;
+  gap: 3px;
+  background-color: $accent-color;
+
+  // visibility: hidden;
 }
 
 .cell {
-    min-height: 20vmin;
-    min-width: 20vmin;
+  min-height: 20vmin;
+  min-width: 20vmin;
   background-color: $secondary-color;
   display: grid;
   margin-top: auto;
- 
+
   span {
     align-self: center;
     font-size: clamp(10px, 3rem, 4rem);

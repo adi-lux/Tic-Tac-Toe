@@ -22,9 +22,6 @@ const Player = (givenUserName, gameLetter) => {
     set userName(newUserName) {
       userName = newUserName;
     },
-    set letter(newLetter) {
-      letter = newLetter;
-    },
   };
 };
 

@@ -14,29 +14,57 @@
         <h1>Tic Tac Toe</h1>
       </div>
       <div class="overlay">
-        <div class="player-card">
-          <h3>Jonas</h3>
-          <div class="pfp"></div>
-          
+        <div id ="player-one" class="player-card">
+          <h3>Player One</h3>
+          <div class="background">
+            <img src="Hund.svg" alt="dog with tongue sticking out">
+          </div>
+          <form id="name-one" class="change-name">
+            <input type="text" name="player-one-name" id="one-name">
+            <input type="submit" value="Change Name">
+          </form>
         </div>
-        <div class="player-card">
-          <h3>Bob</h3>
+        <div id="player-two" class="player-card">
+          <h3>Player Two</h3>
+          <div class="background">
+            <img src="black_cat_black_and_white.svg" alt="black cat">
+          </div>
+          <form id="name-two" class="change-name">
+            <input type="text" name="player-two-name" id="two-name">
+            <input type="submit" value="Change Name">
+          </form>
         </div>
+        <button class="start-button" type="button">Start!</button>
       </div>
       <div class="playing-field">
-        <div class="player-one"></div>
-        <div class="game-board">
-          <div class="cell top-left"></div>
-          <div class="cell top"></div>
-          <div class="cell top-right"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell"></div>
-          <div class="cell bottom-left"></div>
-          <div class="cell"></div>
-          <div class="cell bottom-right"></div>
+        <div class="player-one">
+            <div class="player-card">
+                <h3>Player One</h3>
+                <div class="background">
+                  <img src="Hund.svg" alt="dog with tongue sticking out">
+                </div>
+              </div>
         </div>
-        <div class="player-two"></div>
+        <div class="game-board">
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+        </div>
+        <div class="player-two">
+            <div class="player-card">
+                <h3>Player Two</h3>
+                <div class="background">
+                  <img src="black_cat_black_and_white.svg" alt="black cat">
+                </div>
+                </form>
+              </div>
+        </div>
       </div>
     </div>
   </body>
