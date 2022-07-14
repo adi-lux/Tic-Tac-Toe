@@ -1,35 +1,78 @@
+@font-face {
+  font-family: "Alma Mono";
+  src: url("../fonts/AlmaMono-Bold.ttf"); }
+
+:root {
+  font-family: "Alma Mono", "Courier New", Courier, monospace;
+  color: rgba(29, 0, 23, 0.6);
+  background-color: #fdeae3; }
+
 body {
   margin: 0; }
 
 .container {
-  text-align: center;
-  display: grid; }
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 1fr 4fr; }
 
 .header {
-  background-color: #c9a7fd;
+  background-color: #c4a0f9;
   border-radius: 0 0 25px 25px;
   height: 20vh;
-  grid-template-rows: repeat(3, 1fr); }
+  display: grid;
+  overflow: clip;
+  place-content: center;
+  box-shadow: 0px 2px 5px rgba(185, 164, 164, 0.9); }
+  .header h1 {
+    max-width: 100%;
+    font-size: clamp(15px, 4rem, 5rem); }
+
+.overlay {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  backdrop-filter: blur(10px);
+  visibility: hidden; }
+
+.playing-field {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  display: grid;
+  grid-template-areas: "one one board board board two two"; }
+
+.player-one {
+  grid-area: one;
+  height: 20vmin;
+  width: 20vmin; }
+
+.player-two {
+  grid-area: two;
+  height: 20vmin;
+  width: 20vmin; }
 
 .game-board {
+  grid-area: board;
+  text-align: center;
   display: grid;
-  background-color: #ffbe93;
-  box-shadow: 3px 3px 55px #f6e8e8;
+  background-color: #f9a0d6;
+  box-shadow: 0px 0px 55px #f9a0d6;
   height: 60vmin;
   width: 60vmin;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
-  margin: 7.5vh auto;
-  border-radius: 40px; }
+  place-self: center;
+  place-content: center;
+  overflow: clip;
+  border-radius: 40px;
+  gap: 2px;
+  background-color: rgba(29, 0, 23, 0.6); }
 
 .cell {
-  min-height: 15vmin;
-  min-width: 15vmin;
-  border: #ffbe93;
-  text-align: center;
+  min-height: 20vmin;
+  min-width: 20vmin;
+  background-color: #f9a0d6;
   display: grid;
-  background: 0.5 1px 10px;
-  margin-top: auto;
-  box-shadow: #ffbe93; }
+  margin-top: auto; }
   .cell span {
-    align-self: center; }
+    align-self: center;
+    font-size: clamp(10px, 3rem, 4rem);
+    color: rgba(29, 0, 23, 0.6); }
