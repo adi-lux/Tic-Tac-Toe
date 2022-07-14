@@ -1,10 +1,48 @@
-.gameBoard {
+$primary-color: rgba(201, 167, 253, 1) !default;
+$secondary-color: rgba(255, 190, 147, 1) !default;
+$action-color: rgba(255, 147, 212, 1) !default;
+
+body {
+    margin: 0;
+}
+
+.container {
+    text-align: center;
     display: grid;
-    background-color: green;
+}
+
+.header {
+    background-color: $primary-color;
+    border-radius: 0 0 25px 25px;
+    height: 20vh;
+
+    grid-template-rows: repeat(3, 1fr)
+}
+
+.game-board {
+    display: grid;
+    background-color: $secondary-color;
+    box-shadow: 3px 3px  55px rgb(246, 232, 232);
+    height: 60vmin;
+    width: 60vmin;
     grid-template-rows: repeat(3,1fr);
     grid-template-columns: repeat(3,1fr);
+    margin: 7.5vh auto;
+    border-radius: 40px;
+    //visibility: hidden;
 }
 
 .cell {
-    border: 1px solid black;
+    min-height: 15vmin;
+    min-width: 15vmin;
+    border: rgba(255, 190, 147, 1);
+    text-align: center;
+    display: grid;
+    background: 0.5 1px 10px;
+
+    margin-top: auto;
+    span {
+        align-self: center;
+    }
+    box-shadow: $secondary-color;
 }

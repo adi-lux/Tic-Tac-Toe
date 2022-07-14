@@ -1,8 +1,35 @@
-.gameBoard {
+body {
+  margin: 0; }
+
+.container {
+  text-align: center;
+  display: grid; }
+
+.header {
+  background-color: #c9a7fd;
+  border-radius: 0 0 25px 25px;
+  height: 20vh;
+  grid-template-rows: repeat(3, 1fr); }
+
+.game-board {
   display: grid;
-  background-color: green;
+  background-color: #ffbe93;
+  box-shadow: 3px 3px 55px #f6e8e8;
+  height: 60vmin;
+  width: 60vmin;
   grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(3, 1fr); }
+  grid-template-columns: repeat(3, 1fr);
+  margin: 7.5vh auto;
+  border-radius: 40px; }
 
 .cell {
-  border: 1px solid black; }
+  min-height: 15vmin;
+  min-width: 15vmin;
+  border: #ffbe93;
+  text-align: center;
+  display: grid;
+  background: 0.5 1px 10px;
+  margin-top: auto;
+  box-shadow: #ffbe93; }
+  .cell span {
+    align-self: center; }
