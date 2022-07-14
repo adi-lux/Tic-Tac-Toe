@@ -32,7 +32,6 @@ const Player = (givenUserName, gameLetter) => {
 //
 
 const GameBoard = (() => {
-  'use strict';
   let gameArray = [
     ["", "", ""],
     ["", "", ""],
@@ -41,7 +40,7 @@ const GameBoard = (() => {
   let filledSpaces = 0;
   const playerList = [Player("Player One", "X"), Player("Player Two", "O")];
   let curPlayer = 0;
-  let winningRow = [-2,-2,-2];
+  let winningRow = [-2, -2, -2];
 
   const resetGame = () => {
     filledSpaces = 0;
@@ -59,31 +58,63 @@ const GameBoard = (() => {
 
   const _checkForWin = () => {
     // invariant: you will always be checking the current person's most recent move.
-    const curLetter = playerList[curPlayer].letter
-
+    const curLetter = playerList[curPlayer].letter;
+    console.log(`${curLetter}`);
 
     // diagonal
 
-    if (gameArray[0][2] === curLetter && gameArray[0][2] === curLetter && gameArray[0][2] === curLetter ) {
+    if (
+      gameArray[0][2] === curLetter &&
+      gameArray[1][1] === curLetter &&
+      gameArray[2][0] === curLetter
+    ) {
       console.log(`win!`);
-      return [[0,2],[1,1],[2,0]]
+      return [
+        [0, 2],
+        [1, 1],
+        [2, 0],
+      ];
     }
-    if (gameArray[0][0] === curLetter && gameArray[0][0] === curLetter && gameArray[0][0] === curLetter) {
+    if (
+      gameArray[0][0] === curLetter &&
+      gameArray[1][1] === curLetter &&
+      gameArray[2][2] === curLetter
+    ) {
       console.log(`win!`);
-      return [[0,0],[1,1],[2,2]]
+      return [
+        [0, 0],
+        [1, 1],
+        [2, 2],
+      ];
     }
 
     // horizontal
     for (let i = 0; i < gameArray.length; i++) {
-        if (gameArray[i][0] === curLetter && gameArray[i][1] === curLetter && gameArray[i][2] === curLetter) {
-          console.log(`win!`);
-          return [[i,0],[i,1],[i,2]]
-        }
-        if (gameArray[0][i] === curLetter && gameArray[1][i] === curLetter && gameArray[2][i] === curLetter) {
-          console.log(`win!`);
-          return [[0,i],[1,i],[2,i]]
-        }
+      if (
+        gameArray[i][0] === curLetter &&
+        gameArray[i][1] === curLetter &&
+        gameArray[i][2] === curLetter
+      ) {
+        console.log(`win!`);
+        return [
+          [i, 0],
+          [i, 1],
+          [i, 2],
+        ];
       }
+      if (
+        gameArray[0][i] === curLetter &&
+        gameArray[1][i] === curLetter &&
+        gameArray[2][i] === curLetter
+      ) {
+        console.log(`win!`);
+        return [
+          [0, i],
+          [1, i],
+          [2, i],
+        ];
+      }
+    }
 
     // vertical
 
@@ -91,12 +122,11 @@ const GameBoard = (() => {
       console.log(`tie!`);
       return [-1, -1, -1]; // Tied game
     }
-    
-    return [-2,-2,-2]; // incomplete game
 
+    return [-2, -2, -2]; // incomplete game
   };
 
-  const _placeLetterOnBoard = (x,y) => {
+  const _placeLetterOnBoard = (x, y) => {
     if (gameArray[y][x] !== "") {
       return false;
     }
@@ -118,11 +148,10 @@ const GameBoard = (() => {
 
     // If not win, swap players
 
+    if (winningRow[0] === -2) {
+      curPlayer ^= 1; // XOR's curPlayer
+    }
 
-      if (winningRow[0] === -2) {  
-        curPlayer ^= 1  // XOR's curPlayer    
-      }
-    
     // return true = success, false = not placed on the board
     return true;
   };
@@ -132,10 +161,10 @@ const GameBoard = (() => {
       return winningRow;
     },
     get curPlayer() {
-      return curPlayer;
+      return playerList[curPlayer];
     },
     get gameArray() {
-      return gameArray
+      return gameArray;
     },
     move,
   };
@@ -143,5 +172,24 @@ const GameBoard = (() => {
 
 // displayController Module
 
-const DisplayController = (() => {})();
+const DisplayController = (() => {
+  const CellList = document.querySelectorAll(".cell");
+  let count = 0;
+  CellList.forEach((cell) => {
+    cell.id = `cell-${count}`;
+    cell.addEventListener("click", () => {
+      console.log(`${cell.id.substring(5)}`);
 
+      const curPlayerLetter = GameBoard.curPlayer.letter;
+      if (
+        GameBoard.move(
+          cell.id.substring(5) % 3,
+          Math.floor(cell.id.substring(5) / 3)
+        )
+      ) {
+        cell.innerHTML = `<p>${curPlayerLetter}</p>`;
+      }
+    });
+    count++;
+  });
+})();

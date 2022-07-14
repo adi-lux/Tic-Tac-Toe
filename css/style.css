@@ -1,0 +1,8 @@
+.gameBoard {
+  display: grid;
+  background-color: green;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); }
+
+.cell {
+  border: 1px solid black; }
